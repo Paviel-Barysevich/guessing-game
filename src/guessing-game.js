@@ -1,33 +1,36 @@
 class GuessingGame {
     constructor() {
         this.arr = [];
+        this.left = 0;
+        this.right;
+        this.middle;
     }
 
     setRange(min, max) {
-        for (let i = 0; i <= max; i++) {
+        for (let i = min; i <= max; i++) {
             this.arr[i] = i;
         }
+
+        this.right = this.arr.length - 1;
     }
 
     guess() {
-        let right = this.arr.length - 1;
-        let middle = Math.ceil(right / 2);
-
-        return this.arr[middle];
+        this.countMiddle();
+        return this.arr[this.middle];
     }
 
     lower() {
-        let guessNumber = this.guess();
-        let indexOfGuessNum = this.arr.indexOf(guessNumber);
-
-        this.arr = this.arr.slice(0, (indexOfGuessNum + 1));
+        this.right = this.middle;
+        this.countMiddle();
     }
 
     greater() {
-        let guessNumber = this.guess();
-        let indexOfGuessNum = this.arr.indexOf(guessNumber);
+        this.left = this.middle;
+        this.countMiddle();
+    }
 
-        this.arr = this.arr.slice(indexOfGuessNum);
+    countMiddle() {
+        this.middle = this.left + Math.ceil((this.right - this.left)/ 2);
     }
 }
 
